@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 
 import com.jmatio.types.MLArray;
 
@@ -30,7 +31,7 @@ public class FileBufferedOutputStream extends BufferedOutputStream
     
     public FileBufferedOutputStream() throws IOException
     {
-        file = File.createTempFile( "jmatio-", null );
+        file = Files.createTempFile("jmatio-", null).toFile();
         file.deleteOnExit();
         raFile = new RandomAccessFile(file, "rw");
         rwChannel = raFile.getChannel();
@@ -39,7 +40,7 @@ public class FileBufferedOutputStream extends BufferedOutputStream
     
     public FileBufferedOutputStream( MLArray array ) throws IOException
     {
-        file = File.createTempFile( "jmatio-" + array.getName() + "-", null );
+        file = Files.createTempFile("jmatio-" + array.getName() + "-", null).toFile();
         file.deleteOnExit();
         raFile = new RandomAccessFile(file, "rw");
         rwChannel = raFile.getChannel();
